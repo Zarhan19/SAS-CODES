@@ -1,0 +1,38 @@
+
+filename mail email "mail@id1"
+       CC=("mail@id2" "mail@id3" )
+            subject="write subject here"
+              attach=("\\C:\path\file\to\be\written\filename.csv");
+
+data _null_;
+  file mail;
+  put "Hi";
+  put " ";
+  put "write text here";
+  put " ";
+  put "Thanks and Regards,";
+  put " ";
+run;
+
+
+
+/************* if multiple files are to be attached , add new file paths in the attach part of the code **************/
+
+attach=("\\path1\filename1.txt"
+						"\\path2\filename2.txt"
+						 "\\path3\filename3.txt") ;
+             
+             
+/***************** Send the details of the report in the body of the mail *************************************/
+
+ FILENAME mail EMAIL TO= ("mail@id1" )
+ SUBJECT="write subject here" CONTENT_TYPE="text/html";
+
+ODS LISTING CLOSE;
+ODS HTML BODY=mail;
+
+Proc print 
+data=data_set_name;
+title2 "Title of Report";
+footnote  "Add footnote";
+run;
