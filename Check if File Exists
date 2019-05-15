@@ -1,0 +1,13 @@
+%macro checkds(dsn);
+  %if %sysfunc(exist(&dsn)) %then %do;
+		 write code to execute if file exists
+     %end;
+  
+  %else %do;
+  
+	data _null_;
+      file print;
+      put #3 @10 "Data set &dsn. did not exist ,now created with 0 records.";
+    run;
+  %end;
+%mend checkds;
