@@ -1,0 +1,18 @@
+%macro rename_cols(prfx);
+proc sql; 
+   select cats(name,'=',name,'_',&prfx.)
+          into :list_new
+          separated by ' '
+          from dictionary.columns
+          where libname = 'libname' and memname = 'TableName'
+           and name not in ("Field1","Field2","Field3");
+quit;
+
+proc datasets library = work nolist;
+   modify  TBName;
+   rename &list_new;
+quit;
+
+%mend;
+
+%rename_cols(201701);
