@@ -1,0 +1,10 @@
+/*** Run the following and Save the program : ***/
+
+;*%mend;*);*';*";**/;
+run;
+
+
+
+/*** Refer this article for further details 
+https://communities.sas.com/t5/SAS-Programming/quot-NOTE-49-169-The-meaning-of-an-identifier-after-a-quoted/td-p/121796
+***/
