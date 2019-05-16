@@ -1,0 +1,21 @@
+
+data t ;
+currentDate_2 = %sysfunc(date())-45;
+   yest = put(currentDate_2,yymmddn8.);
+   mt = put(currentDate_2,yymmn6.);
+   strt = put(fd,yymmddn8.);
+   call symput("st",strt);
+   call symput("ed",yest);
+   call symput("ym",mt);
+run;
+%macro loop;
+%do i = &st %to &ed;
+ proc import datafile = "\\caberan\Fastermind_Fulfilment\Fulfilment\fastermind_stats_from_&i..csv"  out = ful_&i. dbms = dlm replace; 
+ delimiter = ','; run;
+%end;
+%mend loop;
+%loop;
+
+DATA FULFILLED_&ym.;
+SET ful_&ym.:;
+RUN;
