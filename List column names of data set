@@ -1,0 +1,10 @@
+
+proc contents varnum data = filename
+out = vars(keep = varnum name)
+noprint;
+run;
+
+/* sort by variable number*/
+proc sql;
+create table vars_1 as select * from vars order by varnum desc;
+quit;
