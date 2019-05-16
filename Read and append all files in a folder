@@ -1,0 +1,81 @@
+
+/* create a data set with the name and path of all files in all folders 
+change only the path and don’t touch anything else  */
+filename in_dir pipe 'dir "\\C:\Users\file_path" /s /b';
+
+data mylist; ;
+  attrib filename format=$200.;
+  infile in_dir;
+  input filename $;
+run;
+
+
+data mylist; 
+set mylist; 
+   call symput ('num_files',_n_); 
+run; 
+quit; 
+
+
+
+
+%macro infiledata; 
+
+*loop through all files in "dirlist" data set; 
+
+
+%do j=1 %to &num_files; 
+
+
+*if observation=j then pull out the path and filename; 
+        data _null_; 
+                set mylist; 
+                        if _n_=&j; 
+                        call symput ('filename',trim(left(filename))); 
+        run; 
+
+
+data one; 
+ infile "&filename" delimiter='|'  DSD lrecl=32767 firstobs=1  ; 
+ filename="&filename"; 
+
+/* change the field names, i.e., instead of A change it to field_name1 and the format and so on*/
+
+  input      
+                                                A:            $50.
+                                                B:            $50.
+                                                C:            $50.
+                                                D:            $50.
+                                                E:            $50.
+                                                F:            $10.
+                                                G:           $30.
+                                                H:           $5.
+                                                I:             8.
+                                                J:             $50.
+                                                K:            $50.
+
+
+;
+run;
+
+quit; 
+
+proc append base=allfiles data=one; 
+run;
+
+quit; 
+%end; 
+
+
+%mend infiledata; 
+
+%infiledata; 
+
+
+
+proc export data = work.allfiles
+outfile = '\\path_to_export\file_name.csv'
+  replace  dbms=dlm; 
+   delimiter='|';
+
+run;
