@@ -1,0 +1,11 @@
+filename create ftp 'Output_filename.txt'
+   host='host.ip.address'
+   user='username' pass = 'password';
+
+proc export data= data_set_that_needs_to_be_exported
+outfile=create  dbms=dlm  replace;
+delimiter=',';
+run;
+
+/* data_set_that_needs_to_be_exported : this is the dataset that has to be written to ftp location as text file*/
+/* Output_filename.txt : This is the text file that will be written to ftp location*/
