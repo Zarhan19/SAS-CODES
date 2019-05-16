@@ -1,0 +1,14 @@
+data out_file_name;
+set in_file_name;
+row=_n_;
+run;
+
+
+/************** create row number by group************/
+
+data out_file_name;
+set in_file_name;
+by grouping_variable;
+if first.grouping_variable then row = 0;
+row+1;
+run;
