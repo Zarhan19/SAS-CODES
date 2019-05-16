@@ -1,0 +1,14 @@
+%macro replace (data) ;
+          data &data ;
+          set &data ;
+          array nums _numeric_;
+            do over nums;
+            if nums = . then nums = 0;
+            end;
+          
+          array chrs _character_;
+            do over chrs;
+            if chrs = "" then chrs = "NA";
+            end; 
+			    run;
+%mend replace ;
