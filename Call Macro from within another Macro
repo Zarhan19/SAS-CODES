@@ -1,0 +1,19 @@
+/************* This macro has to be iteratively called *******************/
+%macro sel(m);
+
+PROC SQL;
+   CREATE TABLE test_&m. AS SELECT * FROM test1 t1 where field = &m.;
+QUIT;
+proc append base= test_base data= test_&m. ;
+run;
+
+%mend;
+
+/******************* Above macro is called from the following macro ********************/
+data x;
+  R = (intck('month','01Jan2016'd,date()));
+    do v = 7 to R;
+      m = put(intnx('month',date(),-V),YYMMN6.);
+         call execute('%sel('||m||');'); 
+    END;
+run; 
