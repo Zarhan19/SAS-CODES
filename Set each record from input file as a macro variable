@@ -1,0 +1,16 @@
+
+%macro varlist(dsn);
+
+proc sql noprint;
+ select distinct Variablename,Value into 
+  :varname1-:varname9999, :VAL1-:VAL999 /*variable name is set to macro varname, Value is set to macro val*/
+ from WORK.input_file order by sno;
+ quit;
+
+%do i = 1 %to &sqlobs; /*Print the macros*/
+ %put &i &&varname&i;
+ %put &i &&VAL&i;
+%end;
+
+%mend varlist;
+
