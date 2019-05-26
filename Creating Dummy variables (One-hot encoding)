@@ -43,4 +43,3 @@ red,brown
 /* Example invocation */
 %nominal_to_binary(sm_dataset=nominal, sm_var=hair, sm_prefix=hair_);
 %nominal_to_binary(sm_dataset=nominal, sm_var=eye, sm_prefix=eye_);
-Here is the final data set:
